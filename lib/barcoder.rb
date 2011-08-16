@@ -12,7 +12,7 @@ module ActionView
   class Base
     
     # important defaults, should not be messed with.
-    VALID_BARCODER_OPTIONS = [:encoding_format, :output_format, :width, :height, :scaling_factor, :xoff, :yoff, :margin, :output_type]
+    VALID_BARCODER_OPTIONS = [:encoding_format, :output_format, :width, :height, :scaling_factor, :xoff, :yoff, :margin, :output_type, :no_ascii]
     DEFAULT_BARCODER_OUTPUT_FORMAT = 'gif'
     DEFAULT_BARCODER_ENCODING = Gbarcode::BARCODE_39 | Gbarcode::BARCODE_NO_CHECKSUM
     BARCODE_STORAGE_PATH = "public/images/barcodes"
