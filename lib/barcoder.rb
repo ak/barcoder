@@ -108,4 +108,4 @@ module Barcoder
 end
 
 ActionView::Base.send :include, Barcoder::Generator::Views
-ActionRecord::Base.send :include, Barcoder::Generator::Model
+ActiveRecord::Base.send :include, Barcoder::Generator::Model
