@@ -65,14 +65,18 @@ module Barcoder
           image_tag("barcodes/#{filename}", :id => "barcode", :class => "barcode")
         end
     
+        def barcode_to_stream(data, format, str)
+          src = "data:image/#{format};base64,#{Base64.encode64(data)}"
+        end
+
         # stream the barcode to the client as a data url. often times, the barcode
         # filesize is so minute, that this is absolutely acceptable. NOTE: I intentionally
         # draw my own img tag for this, image_tag doesn't really like this.
-        def barcode_to_stream(data, format, str)
-          src = "data:image/#{format};base64,#{Base64.encode64(data)}"
+        def barcode_to_stream_image(data, format, str)
+          src = barcode_to_stream(data, format, str)
           %Q{<img src="#{src}" alt="#{str}" id="barcode" class="barcode" />}
         end
-    
+
         # this method tricks GBarcode into printing the contents of the EPS into
         # a file pipe, allowing us to get at the binary data, without touching the disk.
         def get_bytes_from_barcode(barcode, print_options)
@@ -93,7 +97,7 @@ module Barcoder
       
         # simple output strategy, define :output_type => :disk in the #to_barcode call if you want
         # it to write out to the disk for you, otherwise it will be a data url stream.
-        output_type == :disk ? barcode_to_disk(data, bc, output_format) : barcode_to_stream(data, output_format, str)
+        output_type == :disk ? barcode_to_disk(data, bc, output_format) : barcode_to_stream_image(data, output_format, str)
       end
     
       # support for the original barcode-generator plugin syntax.
@@ -108,6 +112,11 @@ module Barcoder
       def create_barcode(str, options)
         data, bc, output_type, output_format = generate_barcode(str, options)
         save_barcode(data, bc, output_format)
+      end
+      
+      def get_barcode_base64(str, options)
+        data, bc, output_type, output_format = generate_barcode(str, options)
+        barcode_to_stream(data, output_format, str)
       end
     end
 
