@@ -66,7 +66,7 @@ module Barcoder
         end
     
         def barcode_to_stream(data, format, str)
-          src = "data:image/#{format};base64,#{Base64.encode64(data)}"
+          Base64.encode64(data)
         end
 
         # stream the barcode to the client as a data url. often times, the barcode
@@ -74,7 +74,7 @@ module Barcoder
         # draw my own img tag for this, image_tag doesn't really like this.
         def barcode_to_stream_image(data, format, str)
           src = barcode_to_stream(data, format, str)
-          %Q{<img src="#{src}" alt="#{str}" id="barcode" class="barcode" />}
+          %Q{<img src="data:image/#{format};base64,#{src}" alt="#{str}" id="barcode" class="barcode" />}
         end
 
         # this method tricks GBarcode into printing the contents of the EPS into
