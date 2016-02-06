@@ -9,4 +9,6 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.required_ruby_version = '>= 1.8.5'
   s.requirements << 'barcoder'
+  s.homepage = "https://github.com/JackDanger/barcoder"
+  s.authors = ['https://github.com/JackDanger']
 end
